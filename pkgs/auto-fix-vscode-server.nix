@@ -123,8 +123,8 @@
     name = "auto-fix-vscode-server";
     runtimeInputs = [ coreutils findutils inotify-tools ];
     text = ''
-      bins_dir_1=${installPath}/bin
-      bins_dir_2=${installPath}/cli/servers
+      bins_dir_1=/home/josh/.vscode-server/bin
+      bins_dir_2=/home/josh/.vscode-server/cli/servers
 
       patch_bin () {
         local actual_dir="$1"
@@ -139,9 +139,9 @@
         old_patched_file="$(basename "$actual_dir")"
         if [[ $old_patched_file == "server" ]]; then
           old_patched_file="$(basename "$(dirname "$actual_dir")")"
-          old_patched_file="${installPath}/.''${old_patched_file%%.*}.patched"
+          old_patched_file="/home/josh/.vscode-server/.''${old_patched_file%%.*}.patched"
         else
-          old_patched_file="${installPath}/.''${old_patched_file%%-*}.patched"
+          old_patched_file="/home/josh/.vscode-server/.''${old_patched_file%%-*}.patched"
         fi
         if [[ -e $old_patched_file ]]; then
           echo "Migrating old nixos-vscode-server patch marker file to new location in $actual_dir." >&2
